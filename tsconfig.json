@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist", // Specify the output directory
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"]
+}
