@@ -22,7 +22,7 @@
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     }
-},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -40,5 +40,12 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.2",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@types/cheerio": "^0.22.35",
+    "axios": "^1.6.8",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.4.5",
+    "puppeteer": "^22.7.1"
   }
 }
