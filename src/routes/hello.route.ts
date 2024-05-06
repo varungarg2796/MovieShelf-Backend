@@ -3,6 +3,6 @@ import { HelloController } from '../controllers/hello.controller';
 
 const router = express.Router();
 
-router.get('/hello', HelloController.sayHello);
+router.get('/ping', HelloController.sayHello);
 
 export default router;
