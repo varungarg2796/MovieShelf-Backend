@@ -16,7 +16,8 @@ export class TMDBService {
       const baseUrl = 'https://api.themoviedb.org/3/search/movie';
       const url = `${baseUrl}?api_key=${this.apiKey}&query=${searchTerm}`;
 
-      const response = await axios.get(url);
+      const response = await axios.get(url, { timeout: 5000 });
+      console.log(response)
       if (response.status === 200) {
         const data = response.data;
         if (data.results) {
@@ -29,7 +30,11 @@ export class TMDBService {
         console.error('Error fetching TMDb data:', response.statusText);
         return [];
       }
-    } catch (error) {
+
+    } catch (error:any) {
+      if (error.code === 'ECONNABORTED') {
+        console.error('Request timed out');
+      } 
       console.error('Error in getTmdbData:', error);
       return [];
     }
