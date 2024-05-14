@@ -7,21 +7,21 @@ export class TMDBService {
     this.apiKey = key;
   }
 
-  static async getTmdbMovieData(searchTerm: string): Promise<object[]> {
+  static async getOmdbData(searchTerm: string): Promise<object[]> {
     try {
       if (!this.apiKey) {
         throw new Error('Please set TMDb API key before making requests');
       }
 
-      const baseUrl = 'https://api.themoviedb.org/3/search/movie';
-      const url = `${baseUrl}?api_key=${this.apiKey}&query=${searchTerm}`;
+      const baseUrl = 'http://www.omdbapi.com/'
+      const url = `${baseUrl}?apiKey=${this.apiKey}&t=${searchTerm}`;
 
       const response = await axios.get(url, { timeout: 5000 });
       console.log(response)
       if (response.status === 200) {
         const data = response.data;
-        if (data.results) {
-          return data.results;
+        if (data) {
+          return data;
         } else {
           console.warn('No movies found for search term:', searchTerm);
           return [];
