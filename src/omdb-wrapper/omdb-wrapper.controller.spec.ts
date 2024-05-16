@@ -24,15 +24,15 @@ describe('OmdbWrapperController', () => {
   it('should get movie data', async () => {
     const result = {};
     jest.spyOn(service, 'searchMoviesByTitle').mockResolvedValue(result);
-    expect(await controller.getMovieData('test')).toBe(result);
+    expect(await controller.getMovieData('test','search')).toBe(result);
   });
 
   it('should throw an error if title is not provided', async () => {
     try {
-      await controller.getMovieData('');
+      await controller.getMovieData('','');
     } catch (e) {
       expect(e.status).toBe(HttpStatus.BAD_REQUEST);
-      expect(e.message).toBe('Title is required');
+      expect(e.message).toBe('Title or Search is required');
     }
   });
 });
