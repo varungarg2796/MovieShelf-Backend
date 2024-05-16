@@ -34,4 +34,24 @@ export class OmdbWrapperService {
       }
     }
   }
+
+  async searchMoviesBySearchTerm(search: string) {
+    try {
+      const params = new URLSearchParams({
+        apikey: this.omdbApiKey,
+        s: search,
+      });
+
+      const response = await this.http.get(`?${params.toString()}`);
+      return response.data;
+    } catch (error) {
+      if (error.code === 'ECONNABORTED') {
+        throw new Error('Request timed out');
+      } else {
+        throw new Error(
+          `Failed to fetch movie data from OMDB API. Error: ${error}`
+        );
+      }
+    }
+  }
 }
