@@ -8,6 +8,7 @@ import { OmdbWrapperModule } from './omdb-wrapper/omdb-wrapper.module';
 import { ConfigModule } from '@nestjs/config';
 import { MoviesModule } from './movies/movies.module';
 import {Movie} from './movies/movie.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import {Movie} from './movies/movie.entity';
     UsersModule,
     OmdbWrapperModule,
     MoviesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

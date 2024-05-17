@@ -22,6 +22,15 @@ CREATE TABLE IF NOT EXISTS movies (
   production VARCHAR(255)
 );
 
+
+CREATE TABLE Users (
+  user_id SERIAL PRIMARY KEY,
+  username VARCHAR(50) UNIQUE,
+  email VARCHAR(100) UNIQUE,
+  password_salt VARCHAR(255) NOT NULL,  -- Store salt separately for future flexibility
+  password_hash VARCHAR(255) NOT NULL  -- Store hashed password
+);
+
 -- Insert data into the movies table
 INSERT INTO movies (
   imdbID,
