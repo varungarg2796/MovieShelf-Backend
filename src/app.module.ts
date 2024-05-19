@@ -9,6 +9,8 @@ import { ConfigModule } from '@nestjs/config';
 import { MoviesModule } from './movies/movies.module';
 import {Movie} from './movies/movie.entity';
 import { AuthModule } from './auth/auth.module';
+import { WatchlistModule } from './watchlist/watchlist.module';
+import { Watchlist } from './watchlist/watchlist.entity';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'admin',
       database: process.env.DB_NAME || 'postgres',
-      entities: [User,Movie],
+      entities: [User,Movie, Watchlist],
       synchronize: false, //recommended for prod
     }),
     ConfigModule.forRoot({
@@ -29,6 +31,7 @@ import { AuthModule } from './auth/auth.module';
     OmdbWrapperModule,
     MoviesModule,
     AuthModule,
+    WatchlistModule,
   ],
   controllers: [AppController],
   providers: [AppService],
