@@ -14,7 +14,7 @@ export class OmdbWrapperController {
     if(title){
       return this.omdbWrapperService.searchMoviesByTitle(title);
     } else {
-      return this.omdbWrapperService.searchMoviesBySearchTerm(title);
+      return this.omdbWrapperService.searchMoviesBySearchTerm(search);
     }
     
   }

@@ -63,4 +63,15 @@ export class AuthService {
       }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async verifyToken(token: string) {
+    try {
+      return this.jwtService.verify(token);
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.UNAUTHORIZED,
+        error: 'Invalid token',
+      }, HttpStatus.UNAUTHORIZED);
+    }
+  }
 }

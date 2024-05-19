@@ -29,6 +29,7 @@ export class OmdbWrapperService {
     try {
       const url = `http://www.omdbapi.com/?apikey=${this.omdbApiKey}&s=${searchTerm}`;
       const response = await axios.get(url, { timeout: 5000 });
+      console.log(url);
       return response.data;
     } catch (error) {
       if (error.code === 'ECONNABORTED') {
