@@ -11,6 +11,7 @@ import {Movie} from './movies/movie.entity';
 import { AuthModule } from './auth/auth.module';
 import { WatchlistModule } from './watchlist/watchlist.module';
 import { Watchlist } from './watchlist/watchlist.entity';
+import { WatchHistoryModule } from './watch-history/watch-history.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { Watchlist } from './watchlist/watchlist.entity';
     MoviesModule,
     AuthModule,
     WatchlistModule,
+    WatchHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
