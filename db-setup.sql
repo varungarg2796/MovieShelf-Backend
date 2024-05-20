@@ -31,6 +31,38 @@ CREATE TABLE Users (
   password_hash VARCHAR(255) NOT NULL  -- Store hashed password
 );
 
+CREATE TABLE Watch_History (
+  watch_history_id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL REFERENCES Users(user_id), -- Replace Users with your actual user table name
+  imdbid VARCHAR(20) NOT NULL,
+  watch_date DATE NOT NULL,  -- Changed data type to DATE
+  feeling VARCHAR(255), -- Optional: User's feeling about the movie
+  watched_with VARCHAR(255),
+  location VARCHAR(255),
+  platform VARCHAR(255), -- Optional: Platform where the movie was watched
+  rewatched BOOLEAN, -- Optional: Flag indicating if the movie was a rewatch
+  notes TEXT -- Optional: User's notes about the movie or experience
+);
+
+CREATE TABLE User_Rating (
+  user_rating_id SERIAL PRIMARY KEY,
+  watch_history_id INT NOT NULL REFERENCES Watch_History(watch_history_id),
+  rating_value INT NOT NULL,
+  review TEXT, -- Optional: User's full review of the movie
+  recommended BOOLEAN, -- Optional: Flag indicating if the user recommends the movie
+  tags VARCHAR(255) -- Optional: User-assigned tags for the movie (e.g., comedy, drama)
+);
+
+CREATE TABLE Watchlist (
+  watchlistID SERIAL PRIMARY KEY, -- Assuming watchlistID is not auto-incrementing
+  user_id INT NOT NULL,
+  imdbid VARCHAR(20) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES Users(user_id),
+  FOREIGN KEY (imdbid) REFERENCES Movies(imdbid),
+  UNIQUE (user_id, imdbid)  -- Unique constraint on user and movie combination
+);
+
+
 -- Insert data into the movies table
 INSERT INTO movies (
   imdbID,

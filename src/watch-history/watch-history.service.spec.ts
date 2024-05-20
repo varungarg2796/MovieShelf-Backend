@@ -1,18 +1,28 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { WatchHistoryController } from './watch-history.controller';
 import { WatchHistoryService } from './watch-history.service';
 
-describe('WatchHistoryService', () => {
-  let service: WatchHistoryService;
+describe('WatchHistoryController', () => {
+  let controller: WatchHistoryController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [WatchHistoryService],
+      controllers: [WatchHistoryController],
+      providers: [
+        {
+          provide: WatchHistoryService,
+          useValue: {
+            // Add your mock methods here
+            find: jest.fn().mockResolvedValue([]),
+          },
+        },
+      ],
     }).compile();
 
-    service = module.get<WatchHistoryService>(WatchHistoryService);
+    controller = module.get<WatchHistoryController>(WatchHistoryController);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(controller).toBeDefined();
   });
 });
