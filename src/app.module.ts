@@ -8,6 +8,13 @@ import { OmdbWrapperModule } from './omdb-wrapper/omdb-wrapper.module';
 import { ConfigModule } from '@nestjs/config';
 import { MoviesModule } from './movies/movies.module';
 import {Movie} from './movies/movie.entity';
+import { AuthModule } from './auth/auth.module';
+import { WatchlistModule } from './watchlist/watchlist.module';
+import { Watchlist } from './watchlist/watchlist.entity';
+import { WatchHistoryModule } from './watch-history/watch-history.module';
+import { UserRatingModule } from './user-rating/user-rating.module';
+import { WatchHistory } from './watch-history/watch-history.entity';
+import { UserRating } from './user-rating/user-rating.entity';
 
 @Module({
   imports: [
@@ -18,7 +25,7 @@ import {Movie} from './movies/movie.entity';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'admin',
       database: process.env.DB_NAME || 'postgres',
-      entities: [User,Movie],
+      entities: [User,Movie, Watchlist, WatchHistory, UserRating],
       synchronize: false, //recommended for prod
     }),
     ConfigModule.forRoot({
@@ -27,6 +34,10 @@ import {Movie} from './movies/movie.entity';
     UsersModule,
     OmdbWrapperModule,
     MoviesModule,
+    AuthModule,
+    WatchlistModule,
+    WatchHistoryModule,
+    UserRatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
