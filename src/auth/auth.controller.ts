@@ -10,9 +10,11 @@ export class AuthController {
     @Body('username') username: string,
     @Body('email') email: string,
     @Body('password') password: string,
+    @Body('firstName') firstName: string, // Add this line
+    @Body('lastName') lastName: string, // Add this line
   ): Promise<{ access_token: string }> {
     try {
-      return await this.authService.signUp(username, email, password);
+      return await this.authService.signUp(username, email, password, firstName, lastName);
     } catch (error) {
       throw new HttpException({
         status: HttpStatus.BAD_REQUEST,
