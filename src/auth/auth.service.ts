@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
-import { UserProfileService } from '../users/user-profile.service';
+import { UserProfileService } from '../user-profile/user-profile.service';
 import { Connection } from 'typeorm';
 import { InjectConnection } from '@nestjs/typeorm';
 
@@ -27,7 +27,7 @@ export class AuthService {
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
-
+    console.log(firstName, lastName)
     try {
       const user = await this.usersService.createUser(username, email, password);
       if (!user) {

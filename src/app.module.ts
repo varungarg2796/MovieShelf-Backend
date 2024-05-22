@@ -15,6 +15,8 @@ import { WatchHistoryModule } from './watch-history/watch-history.module';
 import { UserRatingModule } from './user-rating/user-rating.module';
 import { WatchHistory } from './watch-history/watch-history.entity';
 import { UserRating } from './user-rating/user-rating.entity';
+import { UserProfileModule } from './user-profile/user-profile.module';
+import { UserProfile } from './user-profile/user-profile.entity';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { UserRating } from './user-rating/user-rating.entity';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'admin',
       database: process.env.DB_NAME || 'postgres',
-      entities: [User,Movie, Watchlist, WatchHistory, UserRating],
+      entities: [User,Movie, Watchlist, WatchHistory, UserRating, UserProfile],
       synchronize: false, //recommended for prod
     }),
     ConfigModule.forRoot({
@@ -38,6 +40,7 @@ import { UserRating } from './user-rating/user-rating.entity';
     WatchlistModule,
     WatchHistoryModule,
     UserRatingModule,
+    UserProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -15,6 +15,17 @@ export class UserProfileService {
     userProfile.user = { user_id: userId } as any;
     userProfile.first_name = firstName;
     userProfile.last_name = lastName;
+    console.log(userProfile)
     return this.userProfileRepository.save(userProfile);
+  }
+
+  async getUserProfile(userId: number): Promise<UserProfile> {
+    return this.userProfileRepository.findOne({ where: { user : { user_id: userId } } });
+  }
+
+  async updateUserProfile(userId: number, userProfile: Partial<UserProfile>): Promise<UserProfile> {
+    const { ...rest } = userProfile;
+    await this.userProfileRepository.update({ user: { user_id: userId } }, rest);
+    return this.userProfileRepository.findOne({ where: { user : { user_id: userId } } });
   }
 }

@@ -6,9 +6,9 @@ import {
     OneToOne,
     JoinColumn,
   } from 'typeorm';
-  import { User } from './user.entity';
+  import { User } from '../users/user.entity';
   
-  @Entity('User_Profile')
+  @Entity('user_profile')
   @Unique('unique_user_profile', ['user'])
   export class UserProfile {
     @PrimaryGeneratedColumn()
