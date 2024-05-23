@@ -62,6 +62,19 @@ CREATE TABLE Watchlist (
   UNIQUE (user_id, imdbid)  -- Unique constraint on user and movie combination
 );
 
+CREATE TABLE User_Profile (
+  user_profile_id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL REFERENCES Users(user_id),  -- Links profiles to users
+  date_of_birth DATE,
+  profile_picture VARCHAR(255),
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  bio TEXT,
+  languages VARCHAR(255),
+  country VARCHAR(255),
+  CONSTRAINT unique_user_profile UNIQUE (user_id)  -- Optional, allows only one profile per user
+);
+
 
 -- Insert data into the movies table
 INSERT INTO movies (

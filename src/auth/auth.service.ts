@@ -1,16 +1,33 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { User } from 'src/users/user.entity';
+import { User } from '../users/user.entity';
+import { UserProfileService } from '../user-profile/user-profile.service';
+import { Connection } from 'typeorm';
+import { InjectConnection } from '@nestjs/typeorm';
+
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private userProfileService: UserProfileService,
+    @InjectConnection() private connection: Connection, // Inject the TypeORM connection
   ) {}
 
-  async signUp(username: string, email: string, password: string): Promise<{ access_token: string }> {
+  async signUp(
+    username: string,
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+  ): Promise<{ access_token: string }> {
+    const queryRunner = this.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    console.log(firstName, lastName)
     try {
       const user = await this.usersService.createUser(username, email, password);
       if (!user) {
@@ -19,16 +36,25 @@ export class AuthService {
           error: 'Unable to add user',
         }, HttpStatus.BAD_REQUEST);
       }
+      // Create user profile
+      await this.userProfileService.createUserProfile(user.user_id, firstName, lastName);
       const jwt = await this.generateJWT(user);
+      await queryRunner.commitTransaction();
       return jwt;
     } catch (error) {
+      // If we have errors we should rollback the changes
+      await queryRunner.rollbackTransaction();
       console.error(error);
       throw new HttpException({
         status: HttpStatus.BAD_REQUEST,
         error: 'Unable to add user',
       }, HttpStatus.BAD_REQUEST);
+    } finally {
+      // You should release query runner which is manually created:
+      await queryRunner.release();
     }
   }
+
   
   async validateUser(username: string, password: string): Promise<User | null> {
     try {
