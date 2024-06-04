@@ -5,6 +5,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: 'http://localhost:3001',
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Movie Shelf Backend')
     .setDescription('App to manage your movie collection')
