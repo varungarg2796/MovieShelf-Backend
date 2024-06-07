@@ -57,6 +57,7 @@ CREATE TABLE Watchlist (
   watchlistID SERIAL PRIMARY KEY, -- Assuming watchlistID is not auto-incrementing
   user_id INT NOT NULL,
   imdbid VARCHAR(20) NOT NULL,
+  createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES Users(user_id),
   FOREIGN KEY (imdbid) REFERENCES Movies(imdbid),
   UNIQUE (user_id, imdbid)  -- Unique constraint on user and movie combination

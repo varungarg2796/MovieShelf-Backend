@@ -24,7 +24,7 @@ export class WatchlistController {
   @Get()
   async findAll(@Req() request: any): Promise<Watchlist[]> {
     try {
-      return await this.watchlistService.findAll(request.user);
+      return await this.watchlistService.findAll(request.user.sub);
     } catch (error) {
         console.log(error);
       throw new HttpException({
