@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryColumn, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Movie } from '../movies/movie.entity';
 
@@ -14,4 +14,7 @@ export class Watchlist {
   @ManyToOne(() => Movie)
   @JoinColumn({ name: 'imdbid' })
   imdbid: string;
+
+  @CreateDateColumn()
+  createdon: Date;
 }

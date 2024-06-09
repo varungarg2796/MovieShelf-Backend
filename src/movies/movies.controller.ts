@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { Movie } from './movie.entity';
 
@@ -10,4 +10,10 @@ export class MoviesController {
   findAll(): Promise<Movie[]> {
     return this.moviesService.findAll();
   }
+
+  @Post()
+  create(@Body() movie: Movie): Promise<Movie> {
+    return this.moviesService.create(movie);
+  }
+  
 }

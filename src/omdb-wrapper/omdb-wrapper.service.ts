@@ -25,9 +25,9 @@ export class OmdbWrapperService {
     }
   }
 
-  async searchMoviesBySearchTerm(searchTerm: string) {
+  async searchMoviesBySearchTerm(searchTerm: string, page: number) {
     try {
-      const url = `http://www.omdbapi.com/?apikey=${this.omdbApiKey}&s=${searchTerm}`;
+      const url = `http://www.omdbapi.com/?apikey=${this.omdbApiKey}&s=${searchTerm}&type=movie&page=${page}`;
       const response = await axios.get(url, { timeout: 5000 });
       console.log(url);
       return response.data;

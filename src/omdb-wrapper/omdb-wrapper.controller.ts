@@ -7,14 +7,14 @@ export class OmdbWrapperController {
   constructor(private readonly omdbWrapperService: OmdbWrapperService) {}
 
   @Get('movie')
-  async getMovieData(@Query('title') title: string, @Query('search') search: string) {
+  async getMovieData(@Query('title') title: string, @Query('search') search: string, @Query('page') page: number){
     if (!title && !search) {
       throw new HttpException('Title or Search is required', HttpStatus.BAD_REQUEST);
     }
     if(title){
       return this.omdbWrapperService.searchMoviesByTitle(title);
     } else {
-      return this.omdbWrapperService.searchMoviesBySearchTerm(search);
+      return this.omdbWrapperService.searchMoviesBySearchTerm(search, page);
     }
     
   }

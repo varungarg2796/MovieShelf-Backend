@@ -13,4 +13,9 @@ export class MoviesService {
   findAll(): Promise<Movie[]> {
     return this.moviesRepository.find();
   }
+
+  create(movie: Movie): Promise<Movie> {
+    console.log(movie);
+    return this.moviesRepository.save(movie);
+  }
 }
