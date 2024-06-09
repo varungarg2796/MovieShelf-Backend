@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Watchlist } from './watchlist.entity';
-import { User } from '../users/user.entity';
 
 @Injectable()
 export class WatchlistService {

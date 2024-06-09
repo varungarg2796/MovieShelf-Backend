@@ -35,7 +35,7 @@ CREATE TABLE Watch_History (
   watch_history_id SERIAL PRIMARY KEY,
   user_id INT NOT NULL REFERENCES Users(user_id), -- Replace Users with your actual user table name
   imdbid VARCHAR(20) NOT NULL,
-  watch_date DATE NOT NULL,  -- Changed data type to DATE
+  watch_date DATE,  -- Changed data type to DATE
   feeling VARCHAR(255), -- Optional: User's feeling about the movie
   watched_with VARCHAR(255),
   location VARCHAR(255),
@@ -47,7 +47,7 @@ CREATE TABLE Watch_History (
 CREATE TABLE User_Rating (
   user_rating_id SERIAL PRIMARY KEY,
   watch_history_id INT NOT NULL REFERENCES Watch_History(watch_history_id),
-  rating_value INT NOT NULL,
+  rating_value INT,
   review TEXT, -- Optional: User's full review of the movie
   recommended BOOLEAN, -- Optional: Flag indicating if the user recommends the movie
   tags VARCHAR(255) -- Optional: User-assigned tags for the movie (e.g., comedy, drama)
