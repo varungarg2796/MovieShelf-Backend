@@ -11,9 +11,12 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   password_salt: string;
 
-  @Column()
+  @Column({ nullable: true })
   password_hash: string;
+
+  @Column({ unique: true })
+  googleid: string;
 }

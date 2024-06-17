@@ -9,6 +9,8 @@ import { ConfigService } from '@nestjs/config';
 import { ConfigModule } from '@nestjs/config';
 import { UserProfileService } from 'src/user-profile/user-profile.service';
 import { UserProfileModule } from 'src/user-profile/user-profile.module';
+import { PassportModule } from '@nestjs/passport';
+import { GoogleStrategy } from './google.strategy';
 
 @Module({
   imports: [
@@ -21,10 +23,11 @@ import { UserProfileModule } from 'src/user-profile/user-profile.module';
         signOptions: { expiresIn: '24h' },
       }),
     }),
-    UserProfileModule
+    UserProfileModule,
+    PassportModule
   ],
   controllers: [AuthController],
-  providers: [AuthService, UsersService, UserProfileService],
+  providers: [AuthService, UsersService, UserProfileService, GoogleStrategy],
   exports: [AuthService],
 })
 export class AuthModule {/*...*/}

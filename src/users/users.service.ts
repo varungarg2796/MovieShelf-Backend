@@ -46,4 +46,37 @@ export class UsersService {
     }
     return null;
   }
+
+  async generateUniqueUsername(firstName: string, lastName: string): Promise<string> {
+    const baseUsername = `${firstName.toLowerCase()}.${lastName.toLowerCase()}`.replace(/[^a-z0-9]/g, '');
+    let username = baseUsername;
+    let counter = 1;
+
+    while (await this.userRepository.findOne({ where: { username } })) {
+      username = `${baseUsername}${counter}`;
+      counter++;
+    }
+
+    return username;
+  }
+  async createGoogleUser(username: string, email: string, googleId: string): Promise<User> {
+    const user = new User();
+    user.username = username;
+    user.email = email;
+    user.googleid = googleId;
+    try {
+      await this.userRepository.save(user);
+    } catch (error) {
+      console.error(error); // log the error
+      if (error.code === '23505') { // duplicate username
+      throw new ConflictException('Email/Username already exists');
+      } else {
+      throw new InternalServerErrorException();
+      }
+    }
+    return user;
+    }
+
+
+
 }
