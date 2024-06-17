@@ -27,8 +27,11 @@ CREATE TABLE Users (
   user_id SERIAL PRIMARY KEY,
   username VARCHAR(50) UNIQUE,
   email VARCHAR(100) UNIQUE,
-  password_salt VARCHAR(255) NOT NULL,  -- Store salt separately for future flexibility
-  password_hash VARCHAR(255) NOT NULL  -- Store hashed password
+  password_salt VARCHAR(255),  -- Make salt nullable
+  password_hash VARCHAR(255),  -- Make hashed password nullable
+  googleId VARCHAR(255) UNIQUE, -- Add googleId field for OAuth users
+  firstName VARCHAR(100) NOT NULL, -- Add firstName field
+  lastName VARCHAR(100) NOT NULL  -- Add lastName field
 );
 
 CREATE TABLE Watch_History (

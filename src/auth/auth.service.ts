@@ -3,8 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/user.entity';
 import { UserProfileService } from '../user-profile/user-profile.service';
-import { Connection } from 'typeorm';
-import { InjectConnection } from '@nestjs/typeorm';
+import { Connection, Repository } from 'typeorm';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 
 
 @Injectable()
@@ -14,6 +14,8 @@ export class AuthService {
     private jwtService: JwtService,
     private userProfileService: UserProfileService,
     @InjectConnection() private connection: Connection, // Inject the TypeORM connection
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
   async signUp(
@@ -99,5 +101,24 @@ export class AuthService {
         error: 'Invalid token',
       }, HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  async createOrUpdateUserFromGoogle(profile: any): Promise<User> {
+    let user = await this.userRepository.findOne({ where: { googleid: profile.id } });
+
+    if (!user) {
+      const username = await this.usersService.generateUniqueUsername(profile.name.givenName, profile.name.familyName);
+
+      // For OAuth users, password and salt can be empty initially
+      user = await this.usersService.createGoogleUser(// Await the createGoogleUser method call
+        username,
+        profile.emails[0].value,
+        profile.id,
+      );
+
+      await this.userRepository.save(user);
+    }
+
+    return user;
   }
 }
