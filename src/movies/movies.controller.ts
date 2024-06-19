@@ -11,6 +11,11 @@ export class MoviesController {
     return this.moviesService.findAll();
   }
 
+  @Get('top-rated')
+  getPopularMovies(): Promise<Movie[]> {
+    return this.moviesService.getTopRatedMovies();
+  }
+
   @Post()
   create(@Body() movie: Movie): Promise<Movie> {
     return this.moviesService.create(movie);
